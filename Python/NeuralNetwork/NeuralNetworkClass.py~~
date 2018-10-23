@@ -1,0 +1,248 @@
+import numpy as np
+import random
+from math import *
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+class NeuralNetworkClass:
+    def __init__(self, size_network, n_epochs, s_batch, learn_r):
+        self.num_epochs = n_epochs;
+        self.size_batch = s_batch;
+        self.learn_rate = learn_r;
+        self.network_length = np.shape(size_network)[0]
+        self.w = list()
+        self.b = list()
+
+        for k in range(1, self.network_length):
+            self.w.append(np.random.randn(size_network[k], size_network[k-1]))
+            self.b.append(np.random.randn(size_network[k]))
+#            self.w.append(np.ones((size_network[k], size_network[k-1])))
+#            self.b.append(np.ones(size_network[k]))
+
+    def FeedForward(self, a):
+        
+        for w, b in zip(self.w, self.b):
+            
+            a = self.Sigmoid(np.squeeze(np.asarray(np.dot(w, a))) + b)
+        
+        return a
+
+    def Sigmoid(self, x):
+    
+        return 1.0/(1.0 + np.exp(-x))
+
+    def Sigmoid_deriv(self, x):
+
+        return np.multiply(self.Sigmoid(x), (1.0 - self.Sigmoid(x)))
+
+    def Cost_deriv(self, act, y):
+
+        return (act - y)
+
+    def SGD(self, training_set, test_set):
+        
+        n = np.shape(training_set)[2]
+        
+        plot_resolution = 100
+
+        xplot = np.linspace(0,1, plot_resolution)
+        yplot = np.zeros((self.num_epochs, plot_resolution))
+#        print('size Train = ', np.shape(training_set))
+ #       print('size = ', self.size_batch) 
+        for k in range(self.num_epochs):
+
+            ###
+            train = np.matrix(training_set[0])
+            train_res = np.matrix(training_set[1])
+            shuffled = np.random.permutation(n)
+            shuffled = [int(i) for i in shuffled]
+            #print('shuffle = ', np.shape(shuffled)) 
+            for m in range(0, n, self.size_batch):
+
+                train_tmp     = [np.array(training_set[0][:, k]) for k in shuffled[m:m + self.size_batch]]
+                train_res_tmp = [np.array(training_set[1][:, k]) for k in shuffled[m:m + self.size_batch]]
+                train_tmp     = np.stack(train_tmp, axis=1)
+                train_res_tmp = np.stack(train_res_tmp, axis=1)
+                train_tmp     = np.matrix(train_tmp)
+                train_res_tmp = np.matrix(train_res_tmp)
+
+                mini_batch = []
+
+                mini_batch.append(train_tmp)
+                mini_batch.append(train_res_tmp)
+                #print(np.shape(mini_batch))
+#                self.update_mini_batch(mini_batch, eta)
+
+            
+            ##
+#            mini_batch = [training_set[l : l + self.size_batch] for l in range(0, ln, self.size_batch)]
+
+            self.Update_Batch(mini_batch)
+
+            print('Epoch ', k, ' : ', self.Evaluate(test_set))
+
+            for l in range(plot_resolution):
+
+                yplot[k, l] = np.asscalar(self.FeedForward([xplot[l]]))
+        
+        
+        return xplot, yplot
+
+    def Update_Batch(self, mini_batch):
+
+        n_W = [np.zeros(w.shape) for w in self.w]
+        n_B = [np.zeros(b.shape) for b in self.b]
+
+        for k in range(np.shape(mini_batch)[2]):
+            
+            x = mini_batch[0][0, k]
+            y = mini_batch[1][0, k]
+            d_W, d_B = self.BackPropagation(x, y)
+            n_W = [w + dw for w, dw in zip(n_W, d_W)]
+            n_B = [b + db for b, db in zip(n_B, d_B)]
+
+
+        self.w = [w - (self.learn_rate/np.shape(mini_batch)[2]) * nW for w, nW in zip(self.w, n_W)]
+        self.b = [b - (self.learn_rate/np.shape(mini_batch)[2]) * nB for b, nB in zip(self.b, n_B)]
+
+#        print('w = ', self.w[0])
+#        print('b = ', self.b[0])
+
+ #       exit()
+    def BackPropagation(self, x, y):
+
+        act = x
+        acts = [x]
+        z_vec = []
+        d_W = [np.zeros(w.shape) for w in self.w]
+        d_B = [np.zeros(b.shape) for b in self.b]
+
+        for w, b in zip(self.w, self.b):
+            
+            z = np.squeeze(np.asarray(np.dot(w, act))) + b
+            z_vec.append(z)
+            act = self.Sigmoid(z)
+            acts.append(act)
+
+        
+        delta = np.multiply(self.Cost_deriv(acts[-1], y), self.Sigmoid_deriv(z_vec[-1]))
+        d_W[-1] = np.outer(delta, acts[-2].transpose())
+        d_B[-1] = delta
+
+        '''
+        print('delta = ', delta)
+        print('Cs = ', self.Cost_deriv(acts[-1], y))
+        print('Sig_der = ', self.Sigmoid_deriv(z_vec[-1]))
+        print('z_vec[-1] = ', z_vec[-1])
+        print('Sig_A = ', self.Sigmoid(np.array([-10, 10])))
+        exit()
+        '''
+        for k in range(2, self.network_length):
+            z = z_vec[-k]
+            sig_der = self.Sigmoid_deriv(z)
+            '''
+            print('z = ', np.shape(z))
+            print('w = ', np.shape(self.w[-k + 1].transpose()))
+            print('delta = ', np.shape(delta))
+            print('sig_der = ', np.shape(sig_der))
+            print('mult = ', np.shape(np.dot(self.w[-k + 1].transpose(), delta)))
+            '''
+            delta = np.multiply(np.dot(self.w[-k + 1].transpose(), delta), sig_der)
+            #print(delta)
+            d_W[-k] = np.outer(delta, acts[-k -1].transpose())
+            d_B[-k] = delta
+            
+            #print(np.shape(d_W[-k]))
+            
+        return d_W, d_B
+    
+    def Evaluate(self, test_set):
+        
+        results = []
+#        print('test_shape = ', np.shape(test_set))
+        for k in range(1): # range(np.shape(test_set)[2]):
+#            print('k = ', k)
+#            print(test_set[1][0, k])
+#            print(test_set[0][0, k])
+#            print(self.FeedForward(test_set[0][0,k]))
+            
+            results.append(test_set[1][0, k] - self.FeedForward(test_set[0][0,k]))
+#            results[-1] = sqrt(np.sum(results[-1]**2))
+
+        
+#        print(results)
+        return sqrt(np.sum([r**2 for r in results]))/len(results)
+    
+def func(x):
+
+    return 0*x
+#    return .5 + .4*np.sin(x*2*pi)
+
+def plotter(neuralNetwork, xplot, yplot):
+    
+    def func(x):
+        return 0*x
+        #return .5 + .4*np.sin(x*2*pi)
+
+
+    plt.show()
+    fig = plt.figure()
+    ax = plt.axes(xlim = (0,1), ylim = (0,1))
+    lines = []
+    legends = []
+    
+    line, = ax.plot([], [])
+    lines.append(line)
+    legends.append('Neural Network')
+
+    line, = ax.plot([], [])
+    lines.append(line)
+    legends.append('Analytical')
+ 
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend(legends, loc = 1, frameon = False)
+
+    def init():
+        for line in lines:
+            line.set_data([], [])
+        return lines,
+
+    def animate(i):
+
+        for k, line in enumerate(lines):
+            if k == 0:
+                line.set_data(xplot, yplot[i, :])
+            else:
+                line.set_data(xplot, func(xplot))
+            
+        return lines,
+
+    anim = animation.FuncAnimation(fig, animate, init_func = init, frames = np.shape(yplot)[0], interval = 100, blit = False)
+    plt.show()
+
+
+training_set = []
+num_trainSet = 1000
+size_trainSet = 1
+num_epochs = 100
+training_set.append(np.random.rand(size_trainSet, num_trainSet))
+training_set.append(func(training_set[0]))
+    
+#training_set.append(np.array([[0.1, 0.2, 0.3], [0.02, 0.4, 0.1]]))
+#training_set.append(np.array([[0.1, 0.2, 0.3], [0.02, 0.4, 0.1]]))
+#print(training_set[0])
+#print(training_set[1])
+test_set = []
+test_set.append(np.random.rand(size_trainSet, num_trainSet))
+test_set.append(func(test_set[0]))
+#print(test_set[0])
+#print(test_set[1])
+#test_set.append(np.array([[0.23, 0.32, 0.51], [0, 0, 0]]))
+#test_set.append(np.array([[0, 0, 0, 0], [0, 0, 0, 0]]))
+net = NeuralNetworkClass([size_trainSet, 1, size_trainSet], num_epochs, 100, 1.0)
+xplot, yplot = net.SGD(training_set, test_set)
+
+res = net.Evaluate(test_set)
+#print(res)
+plotter(net, xplot, yplot)

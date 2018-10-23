@@ -1,0 +1,33 @@
+from openpyxl import  load_workbook
+import sys
+
+wb = load_workbook('./test.xlsx')
+
+name = sys.argv[1]
+time_vec = sys.argv[2]
+time_vec = time_vec.split(',')
+
+time_v = [float(i) for i in time_vec]
+print(name)
+print(time_v)
+print(wb.sheetnames)
+
+sheet = wb['Blad1']
+
+print(sheet.title)
+
+# Find row with name
+for k in range(1,10):
+    print(sheet['A' + str(k)].value)
+    print('Markus')
+    print(sheet['A' + str(k)].value == 'Markus')
+    if sheet['A' + str(k)].value == 'Markus':
+        print('Finally')
+        row = str(k)
+
+
+for l in range(len(time_v)):
+    sheet[chr(ord('A') + l + 1) + str(row)].value = time_v[l]
+
+wb.save('./test.xlsx')
+
