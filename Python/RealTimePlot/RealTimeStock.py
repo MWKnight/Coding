@@ -23,7 +23,7 @@ h = 1.0
 data = driver.find_element_by_xpath('//*[@id="chart"]')
 
 time.sleep(5)
-driver.get_screenshot_as_file('/Coding/Python/WebTest/data.png')
+driver.get_screenshot_as_file('/Coding/Python/RealTimePlot/data.png')
 driver.close()
 
 ################### Find previous Data #####################

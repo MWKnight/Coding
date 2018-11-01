@@ -1,0 +1,83 @@
+1541074265887	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\mawah\\AppData\\Local\\Temp\\rust_mozprofile.KLZVzKLCtBUT"
+1541074269056	Marionette	INFO	Listening on port 57462
+1541074269243	Marionette	WARN	TLS certificate errors will be ignored for this session
+1541074277141	Marionette	INFO	Stopped listening on port 57462
+[Parent 9228, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 10208, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 10208, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 11620, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 11620, Chr[Parent 9228, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 9880, Chrome_Child
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1541074286081	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "-marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\mawah\\AppData\\Local\\Temp\\rust_mozprofile.v3hMynZM97UZ"
+1541074289127	Marionette	INFO	Listening on port 57524
+1541074289426	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+JavaScript error: https://assets.svd.se/assets/application-2f9196af2bc1555e0652.js, line 12: Error: Failed to load controller: tabsStackable
+[Parent 12840, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Parent 12840, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 13564, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 13564, C[Child 14156, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chro
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+mium/src/chrome/common/ipc_channel_win.cc, line 346
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+[Parent 12840, Gecko_IOThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 7904, Chrome_ChildThread] WARNING: pipe error: 109: file z:/build/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 346
+[Child 7904, Chrome_ChildThread] WARNING: pipe error: 109: fi1541074315523	Marionette	INFO	Stopped listening on port 57524
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[GPU 13048, Chro
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
