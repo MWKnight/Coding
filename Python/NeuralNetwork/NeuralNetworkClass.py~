@@ -222,6 +222,8 @@ test_set = []
 test_set.append(data_TestSet)
 test_set.append(data_TestAns)
 
+print(np.shape(trainDat))
+
 net = NeuralNetworkClass([1, 20, 20, 20, 1], num_epochs, 1, 2.0)
 xplot, yplot = net.SGD(training_set, test_set)
 
@@ -231,4 +233,14 @@ end = time.perf_counter()
 
 print('Elapsed time = ', end - start)
 
+start = time.perf_counter()
+
+net.FeedForward(trainDat[0, 0])
+
+end = time.perf_counter()
+
+print('Evaluating network time = ', end - start)
+
 net.plotter(xplot, yplot, func)
+
+

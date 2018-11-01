@@ -231,4 +231,14 @@ end = time.perf_counter()
 
 print('Elapsed time = ', end - start)
 
+start = time.perf_counter()
+
+net.FeedForward(trainDat[0, 0])
+
+end = time.perf_counter()
+
+print('Evaluating network time = ', end - start)
+
 net.plotter(xplot, yplot, func)
+
+
