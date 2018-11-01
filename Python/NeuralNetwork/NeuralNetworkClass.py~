@@ -151,12 +151,6 @@ class NeuralNetworkClass:
     def plotter(self, xplot, yplot, f):
         ''' Plots the output from the neural network with the reference solution '''
     
-#        def func(x):
-            
-            #return 0.25 + 0.5*np.heaviside(x - 0.5, 0.5)    
-  #          return .5 + .4*np.sin(x*2*pi)
-
-
         plt.show()
         fig = plt.figure()
         ax = plt.axes(xlim = (0,1), ylim = (0,1))
@@ -238,4 +232,3 @@ end = time.perf_counter()
 print('Elapsed time = ', end - start)
 
 net.plotter(xplot, yplot, func)
-

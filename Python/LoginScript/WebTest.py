@@ -1,0 +1,31 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+import getpass
+import time
+usern = input('Username: ')
+passw = getpass.getpass('Password: ')
+
+driver = webdriver.Firefox()
+
+driver.get("http://outlook.office365.com/knightec.se")
+
+delay = 5
+
+WebDriverWait(driver, delay).until(EC.presence_of_element_located(('name', 'UserName')))
+
+username = driver.find_element_by_name('UserName')
+password = driver.find_element_by_name("Password")
+
+username.send_keys(usern)
+password.send_keys(passw)
+password.send_keys(Keys.ENTER)
+
+time.sleep(2)
+button = driver.find_element_by_xpath('//*[@id="idSIButton9"]')
+button.send_keys(Keys.ENTER)
+#driver.close()
+
