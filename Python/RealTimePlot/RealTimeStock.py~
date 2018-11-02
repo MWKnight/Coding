@@ -8,106 +8,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import time
-
+from FrameCoordinates import GetFrameCoordinates
 
 driver = webdriver.Firefox()
 
-#driver.get('https://www.svd.se/bors/indexlist.php')
-
 driver.get('https://chart.millistream.com/html5_180402/simple_svd.php?id=6485')
 
-x = [] #np.linspace(0,100,100)
-y = [] #np.zeros(100)
+x = []
+y = []
 h = 1.0
 
 data = driver.find_element_by_xpath('//*[@id="chart"]')
 
-time.sleep(5)
-driver.get_screenshot_as_file('/Coding/Python/WebTest/data.png')
+time.sleep(4)
+driver.get_screenshot_as_file('/Coding/Python/RealTimePlot/data.png')
 driver.close()
 
 ################### Find previous Data #####################
 
 img = mpimg.imread('data.png')
 img = img[:,:,:3]
-height, width = np.shape(img[:,:,0])
 
-middle_height = round(height/2.0)
-middle_width = round(width/2.0)
+frame_coords = GetFrameCoordinates(img)
+top_coord = frame_coords[0]
+bot_coord = frame_coords[1]
+left_coord = frame_coords[2]
+right_coord = frame_coords[3]
 
-# Find top of frame
-ep = 0.05
-found_top = False
-for k in range(height):
+############# Extract data ##############
 
-    if (img[k, middle_width, 0] < 1 - ep) or \
-            (img[k, middle_width, 1] < 1 - ep) or \
-            (img[k, middle_width, 2] < 1 - ep):
-                found_top = True
- 
-    if ((img[k, middle_width, 0] > 1 - ep) or \
-            (img[k, middle_width, 1] > 1 - ep) or \
-            (img[k, middle_width, 2] > 1 - ep)) and \
-            found_top:
-                top_coord = k
-                break
-
-# Find bottom of frame
-found_bot = False
-for l in reversed(range(height)):
-
-    if (img[l, middle_width, 0] < 1 - ep) or \
-            (img[l, middle_width, 1] < 1 - ep) or \
-            (img[l, middle_width, 2] < 1 - ep):
-                found_bot = True
- 
-    if ((img[l, middle_width, 0] > 1 - ep) or \
-            (img[l, middle_width, 1] > 1 - ep) or \
-            (img[l, middle_width, 2] > 1 - ep)) and \
-            found_bot:
-                bot_coord = l
-                break
-
-middle_height_coord = int(round((top_coord + bot_coord)/2.))
-
-# Find top of frame
-ep = 0.05
-found_left = False
-
-for k in range(width):
-
-    if (img[middle_height_coord, k, 0] < 1 - ep) or \
-            (img[middle_height_coord, k, 1] < 1 - ep) or \
-            (img[middle_height_coord, k, 2] < 1 - ep):
-                found_left = True
- 
-    if ((img[middle_height_coord, k, 0] > 1 - ep) or \
-            (img[middle_height_coord, k, 1] > 1 - ep) or \
-            (img[middle_height_coord, k, 2] > 1 - ep)) and \
-            found_left:
-                left_coord = k
-                break
-
-# Find bottom of frame
-found_right = False
-
-for l in reversed(range(width)):
-
-    if (img[middle_height_coord, l, 0] < 1 - ep) or \
-            (img[middle_height_coord, l, 1] < 1 - ep) or \
-            (img[middle_height_coord, l, 2] < 1 - ep):
-                found_right = True
- 
-    if ((img[middle_height_coord, l, 0] > 1 - ep) or \
-            (img[middle_height_coord, l, 1] > 1 - ep) or \
-            (img[middle_height_coord, l, 2] > 1 - ep)) and \
-            found_right:
-                right_coord = l
-                break
-
-middle_width_coord = int(round((right_coord + left_coord)/2.))
-
-# Extract data
 find_data_iterator = 0
 found_data = False
 data_pixel = np.zeros(right_coord - left_coord)

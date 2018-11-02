@@ -168,6 +168,8 @@ class NeuralNetworkClass:
         plt.xlabel('x')
         plt.ylabel('y')
         plt.legend(legends, loc = 1, frameon = False)
+        
+        y_a = f(xplot)
 
         def init():
             for line in lines:
@@ -180,7 +182,7 @@ class NeuralNetworkClass:
                 if k == 0:
                     line.set_data(xplot, yplot[i, :])
                 else:
-                    line.set_data(xplot, f(xplot))
+                    line.set_data(xplot, y_a)
             
             return lines,
 
@@ -190,10 +192,9 @@ class NeuralNetworkClass:
 
 def func(x):
     #return 0.25 + 0.5*np.heaviside(x - 0.5, 0.5)    
-    return .5 + .4*np.sin(x*2*pi)
+    return .5 + .4*np.sin(x*2*pi) 
 
 import time
-
 start = time.perf_counter()
 
 training_set = []
@@ -201,6 +202,8 @@ num_epochs = 30
 
 trainSize = 2000
 testSize = 2000
+
+add_noise = True
 
 trainDat = np.random.rand(1, trainSize)
 testDat  = np.random.rand(1, testSize)
@@ -210,10 +213,21 @@ data_RefAns = []
 data_TestSet = []
 data_TestAns = []
 
-data_RefSet = trainDat
-data_RefAns = func(trainDat)
-data_TestSet = testDat
-data_TestAns = func(testDat)
+
+
+if add_noise:
+    
+    data_RefSet = trainDat
+    data_RefAns = func(trainDat) - 0.01*np.random.randn(len(trainDat))
+    data_TestSet = testDat
+    data_TestAns = func(testDat) - 0.01*np.random.randn(len(testDat))
+
+else:
+
+    data_RefSet = trainDat
+    data_RefAns = func(trainDat)
+    data_TestSet = testDat
+    data_TestAns = func(testDat)
 
 training_set.append(data_RefSet)
 training_set.append(data_RefAns)

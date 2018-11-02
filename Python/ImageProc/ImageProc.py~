@@ -49,39 +49,48 @@ middle_height_coord = int(round((top_coord + bot_coord)/2.))
 
 ########### Find left of frame ############
 ep = 0.05
-found_left = False
 
-for k in range(width):
+for n in range(-10, 10):
 
-    if (img[middle_height_coord, k, 0] < 1 - ep) or \
-            (img[middle_height_coord, k, 1] < 1 - ep) or \
-            (img[middle_height_coord, k, 2] < 1 - ep):
-                found_left = True
+    found_left = False
+
+    for k in range(width):
+
+        if (img[middle_height_coord, k, 0] < 1 - ep) or \
+                (img[middle_height_coord, k, 1] < 1 - ep) or \
+                (img[middle_height_coord, k, 2] < 1 - ep):
+                    found_left = True
  
-    if ((img[middle_height_coord, k, 0] > 1 - ep) or \
-            (img[middle_height_coord, k, 1] > 1 - ep) or \
-            (img[middle_height_coord, k, 2] > 1 - ep)) and \
-            found_left:
-                left_coord = k
-                break
+        if ((img[middle_height_coord, k, 0] > 1 - ep) or \
+                (img[middle_height_coord, k, 1] > 1 - ep) or \
+                (img[middle_height_coord, k, 2] > 1 - ep)) and \
+                found_left:
+                    if left_coord > k:
+                        left_coord = k
+                    break
 
 ############ Find right of frame ##############
 
-found_right = False
+right_coord = width
 
-for l in reversed(range(width)):
+for m in range(-10, 10):
 
-    if (img[middle_height_coord, l, 0] < 1 - ep) or \
-            (img[middle_height_coord, l, 1] < 1 - ep) or \
-            (img[middle_height_coord, l, 2] < 1 - ep):
-                found_right = True
+    found_right = False
+    
+    for l in reversed(range(width)):
+
+        if (img[middle_height_coord + m, l, 0] < 1 - ep) or \
+                (img[middle_height_coord + m, l, 1] < 1 - ep) or \
+                (img[middle_height_coord + m, l, 2] < 1 - ep):
+                    found_right = True
  
-    if ((img[middle_height_coord, l, 0] > 1 - ep) or \
-            (img[middle_height_coord, l, 1] > 1 - ep) or \
-            (img[middle_height_coord, l, 2] > 1 - ep)) and \
-            found_right:
-                right_coord = l
-                break
+        if ((img[middle_height_coord + m, l, 0] > 1 - ep) or \
+                (img[middle_height_coord + m, l, 1] > 1 - ep) or \
+                (img[middle_height_coord + m, l, 2] > 1 - ep)) and \
+                found_right:
+                    if right_coord > l:
+                        right_coord = l
+                    break
 
 middle_width_coord = int(round((right_coord + left_coord)/2.))
 
