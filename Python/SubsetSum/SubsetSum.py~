@@ -1,0 +1,23 @@
+import numpy as np
+import time
+import random
+
+
+#set_vec = input("Set = ")
+#set_sum = float(input("Sum (k) = "))
+
+#set_vec = set_vec.split(" ")
+#set_vec = np.array([float(x) for x in set_vec])
+
+set_vec = np.random.randint(-1000, 1000, size = 1000)
+
+set_sum = 0
+
+start = time.perf_counter()
+
+result = ([np.shape(np.where(set_vec + np.roll(set_vec, k) - set_sum == 0)[0])[0] > 0 for k in range(1, round(len(set_vec)/2.0) + 1)])
+
+stop = time.perf_counter()
+
+print(stop - start)
+

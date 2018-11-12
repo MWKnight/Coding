@@ -169,7 +169,7 @@ class NeuralNetworkClass:
         plt.ylabel('y')
         plt.legend(legends, loc = 1, frameon = False)
         
-        y_a = f(xplot) #+ 0.05*np.random.randn(len(xplot))
+        y_a = f(xplot)
 
         def init():
             for line in lines:
@@ -203,6 +203,8 @@ num_epochs = 30
 trainSize = 2000
 testSize = 2000
 
+add_noise = True
+
 trainDat = np.random.rand(1, trainSize)
 testDat  = np.random.rand(1, testSize)
 
@@ -211,10 +213,21 @@ data_RefAns = []
 data_TestSet = []
 data_TestAns = []
 
-data_RefSet = trainDat
-data_RefAns = func(trainDat) - 0.01*np.random.randn(len(trainDat))
-data_TestSet = testDat
-data_TestAns = func(testDat) - 0.01*np.random.randn(len(testDat))
+
+
+if add_noise:
+    
+    data_RefSet = trainDat
+    data_RefAns = func(trainDat) - 0.01*np.random.randn(len(trainDat))
+    data_TestSet = testDat
+    data_TestAns = func(testDat) - 0.01*np.random.randn(len(testDat))
+
+else:
+
+    data_RefSet = trainDat
+    data_RefAns = func(trainDat)
+    data_TestSet = testDat
+    data_TestAns = func(testDat)
 
 training_set.append(data_RefSet)
 training_set.append(data_RefAns)

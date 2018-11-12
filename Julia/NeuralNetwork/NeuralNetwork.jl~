@@ -1,0 +1,202 @@
+function Initialize(n_size)
+
+	n = []
+	W = []
+	B = []
+
+	for k = 2:length(n_size)
+		
+		tmp = randn(n_size[k], 1)
+		push!(B, tmp)
+		tmpM = randn(n_size[k], n_size[k-1])
+		push!(W, tmpM)
+		
+	end
+
+	return W, B
+
+end
+
+function FeedForward(W, B, a)
+
+	for k = 1:length(B)
+		
+		a = W[k]*a + B[k]
+
+	end
+	
+	return a
+end
+
+function Sigmoid(x)
+
+	return 1.0./(ones(length(x)) + broadcast(exp, -x))
+
+end
+
+function Sigmoid_der(x)
+
+	return Sigmoid(x) - Sigmoid(x) .* Sigmoid(x)
+
+end
+
+
+function Cost_deriv(y_n, y)
+
+	return (y_n - y)
+
+end
+
+function SGD(training_set, test_set, num_epochs, batch_size, W, B, learn_rate)
+
+	training_size = size(training_set[1])[1]
+
+	println(training_size)
+
+	for k = 1:num_epochs
+		
+		train_input = training_set[1]
+		train_output = training_set[2]
+		shuffled = sample(1:training_size, training_size)
+
+		for l = range(1, stop = training_size, step = batch_size)
+			
+			train_in_tmp = train_input[shuffled[l:batch_size]]	
+			train_out_tmp = train_output[shuffled[l:batch_size]]
+			
+			mini_batch = []
+
+			push!(mini_batch, train_in_tmp)
+			push!(mini_batch, train_out_tmp)
+
+			W, B = Update_Batch(W, B, mini_batch, learn_rate)
+
+		end
+
+		println("Epoch ", k, " : ", Evaluate(test_set))
+
+	end
+
+end
+
+function Update_Batch(W, B, mini_batch, learn_rate)
+	
+	n_W = [zeros(size(w)) for w in W]
+	n_B = [zeros(size(b)) for b in B]
+	
+	mini_batch_size = size(mini_batch[1])[1]
+	
+	for n = range(1, stop = mini_batch_size)
+		
+		x = mini_batch[1][n, :]
+		y = mini_batch[2][n, :]
+		
+		d_W, d_B = BackPropagation(x, y, W, B)
+		
+		n_W = [W[k] + d_W[k] for k=1:size(n_W)[1]]
+		n_B = [B[k] + d_B[k] for k=1:size(n_B)[1]]
+		
+	end
+
+	W = [W[k] - learn_rate/mini_batch_size * n_W[k] for k = 1:size(n_W)[1]]
+	B = [B[k] - learn_rate/mini_batch_size * n_B[k] for k = 1:size(n_B)[1]]
+
+	return W, B
+
+end
+
+
+function BackPropagation(x, y, W, B)
+
+	act = x
+	acts = []
+	push!(acts, act)
+	z_vec = []
+
+	d_W = [zeros(size(w)) for w in W]
+	d_B = [zeros(size(b)) for b in B]
+
+	for k=1:size(W)[1]
+		
+		z = W[k]*act + B[k]
+		push!(z_vec, z)
+		act = Sigmoid(z)
+		push!(acts, act)
+
+	end
+
+	delta = Cost_deriv(acts[end], y) .* Sigmoid_der(z_vec[end])
+	d_W[end] = delta * acts[end-1]'
+	d_B[end] = delta
+	
+	for k = 1:size(W)[1] - 1
+		z = z_vec[end - k]
+		sig_der = Sigmoid_der(z)
+		delta = (transpose(W[end - k + 1]) * delta) .* sig_der
+		d_W[end - k] = delta * acts[end - k - 1]'
+		d_B[end - k] = delta
+	end
+
+	return d_W, d_B
+
+end
+
+function Evaluate(test_set)
+
+	return 1.0
+
+end
+
+function plotter(xplot, yplot, f)
+
+
+end
+
+
+function func(x)
+
+	return 0.5*ones(length(x)) + 0.4*broadcast(sin, 2*x*pi)
+
+end
+
+using StatsBase
+
+n_size = [1 3 4 1]
+W, B = Initialize(n_size)
+
+train_size = 100
+test_size = 5
+num_epochs = 10
+batch_size = 10
+learn_rate = 1.0
+
+data_train_input = rand(train_size, 1)
+data_train_output = func(data_train_input)
+data_test_input = rand(test_size, 1)
+data_test_output = func(data_test_input)
+
+training_set = []
+test_set = []
+
+push!(training_set, data_train_input)
+push!(training_set, data_train_output)
+
+push!(test_set, data_test_input)
+push!(test_set, data_test_output)
+
+#using GR
+
+#plot(data_train_input, data_train_output, "d")
+
+#sleep(10)
+
+#a = FeedForward(W, B, x) 
+#println("a = ", a)
+
+#b = Sigmoid(x)
+#println("b = ", b)
+
+#c = Sigmoid_der(x, Sigmoid)
+#println("c = ", c)
+
+SGD(training_set, test_set, num_epochs, batch_size, W, B, learn_rate)
